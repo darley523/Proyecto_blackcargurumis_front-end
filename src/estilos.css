@@ -1,0 +1,573 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+/* ----CSS INDEX.HTML---- */
+main {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 1400px; /* Ancho máximo para el contenido */
+    margin: 0 auto; /* Centra el contenido horizontalmente */
+    padding: 0 20px; /* Añade un poco de espacio a los lados */
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffd6ff;
+    font-family: "Poiret One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #ffd6ff; /* Este color ahora coincide con el body */
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav .logo{
+    height: 100px;
+    padding-right: 40px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    font-size: 1.2rem;
+    align-items: center;
+    margin: 0;
+    flex-grow: 1;
+    justify-content: center;
+    flex-grow: 0; /* Evita que la lista de enlaces se expanda */
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+.nav-contenido {
+    display: flex;
+    justify-content: space-between;
+    justify-content: center; /* Centra el logo y los enlaces como un grupo */
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    gap: 100px; /* Añade un espacio entre el logo y los enlaces */
+}
+.Productos-contenedor{
+    display: flex;
+    justify-content: center;
+    gap: 23px;
+    flex-wrap: wrap;
+    padding: 30px 0;
+    font-size: 1.5rem;
+    
+
+}
+
+.Producto{
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgb(114, 1, 114);
+    padding: 10px 5px;
+    width: 200px;
+    height: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    transition: box-shadow 0.3s;
+}
+
+.Producto img {
+    width: 100%;
+    height: 50%;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.Producto h3{
+    margin: 10px 0 5px 0;
+    font-size: 1.1em;
+}
+
+.Producto p{
+    color: #000000;
+    font-weight: bold;
+    margin: 0;
+
+
+}
+
+.Carrusel {
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.Carrusel-contenedor {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    gap: 0;
+}
+
+.Carrusel-contenedor img {
+    display: none;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.carrusel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 214, 214, 0.87);
+    color: #333;
+    border: 1px solid #333;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+    user-select: none;
+}
+
+.carrusel-btn:hover {
+    background-color: #ffffff;
+}
+
+
+.carrusel-btn-prev { left: 20px; }
+.carrusel-btn-next { right: 20px; }
+
+
+.Categorias-contenedor{
+    background-color: #ffd6ff;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    gap: 160px;
+    padding-bottom: 40px;
+}
+
+.Categoria{
+    border: 1px solid #B8BEDD;
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 2px 12px 0 #7a9ac4, 0 1px 4px 0 #ffd6ff;
+    width: 200px;
+
+}
+
+.Categorias h2{
+    background-color: #ffd6ff;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.Categoria img{
+    height: 70%;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.Categoria p{
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #9C89B8;
+    font-size: 1.1rem;
+}
+
+.Categoria:hover {
+    box-shadow: 0 4px 24px 0 #B8BEDD, 2px 2px 30px 0 #BBD0FF;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 0px;
+    background-color: #ffd6ff;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Reduce el espacio entre los elementos apilados */
+}
+
+.footer-content a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.instagram-logo {
+    height: 24px; /* Ajusta el tamaño del logo */
+    width: 24px;
+}
+.Categorias {
+    background-color: #ffd6ff;
+    padding-top: 1px; 
+}
+
+/* ----CSS PRODUCTOS.HTML---- */
+.filtros-contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.filtro select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #B8BEDD;
+}
+
+.filtro label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.btn-agregar-carro {
+    background-color: #EFC3E6;
+    border: none;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 50px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto; /* Esto empuja el botón hacia abajo */
+    width: 90%;
+    align-self: center; /* Asegura que el botón se centre horizontalmente */
+}
+
+.btn-agregar-carro svg {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-left: 5px;}
+
+.btn-agregar-carro:hover {
+    background-color: #d6a9d0;
+}
+
+/* ----CSS LOGIN.HTML y REGISTER.HTML---- */
+
+.login-contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    padding: 20px;
+
+}
+
+.login-register-body {
+    background-color: #ffd6ff;
+    display: block; /* Anula el display: flex del body general */
+    min-height: auto; /* Anula la altura mínima */
+}
+
+.login-form{
+    background-color: #f5daf2;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.form-group{
+    margin-bottom: 20px;
+    text-align: left;
+    font-style: italic;
+    font-size: 1.4rem;
+}
+
+.form-group input{
+    margin-top: 5px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+}
+
+.login-form button{
+    background-color: #EFC3E6;
+    width: 80%;
+    height: 45px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+
+}
+
+.login-logo {
+    height: 150px;
+    margin-bottom: 25px; 
+}
+
+.form-ayuda-contenedor{
+    display: flex;
+    align-items: right;
+    justify-content: space-between;
+    padding-top: 10px;
+
+}
+
+.form-ayuda a{
+    font-size: 1.2rem;
+}
+
+.form-ayuda-contenedor-register {
+    display: flex; 
+    justify-content: flex-end; 
+    padding-top: 10px;
+}
+
+/* Estilos para validación de formularios */
+.form-error {
+    color: #d93025;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: bold;
+    display: none; /* Oculto por defecto */
+    margin-top: 5px;
+}
+
+input.invalid {
+    border-color: #d93025;
+    border-width: 2px;
+}
+
+/* ----CSS COMPRAS.HTML---- */
+
+.carrito-main-contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto; /* Ajustado para heredar el centrado de 'main' */
+    padding: 20px;
+}
+
+.carrito-main-contenedor h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.carrito-vista {
+    margin-top: 5.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.carrito-productos {
+    flex: 3; /* Ocupa 3/4 del espacio */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #fdf6fd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(114, 1, 114, 0.1);
+}
+
+.carrito-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+}
+
+.carrito-item-info {
+    flex-grow: 1;
+}
+
+.carrito-item-info h3 {
+    margin: 0 0 10px 0;
+}
+
+.carrito-item-info p {
+    margin: 0;
+    color: #555;
+}
+
+.carrito-item-cantidad input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-eliminar {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-eliminar:hover {
+    background-color: #e60000;
+}
+
+.carrito-resumen {
+    flex: 1; /* Ocupa 1/4 del espacio */
+    background-color: #f5daf2;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carrito-resumen h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.resumen-linea, .resumen-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.resumen-total {
+    font-weight: bold;
+    font-size: 1.3rem;
+    border-top: 1px solid #EFC3E6;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.btn-pago, .btn-cancelar {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-pago {
+    background-color: #EFC3E6;
+    color: #333;
+}
+
+.btn-pago:hover {
+    background-color: #d6a9d0;
+}
+
+.btn-cancelar {
+    background-color: #f3f3f3;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+.btn-cancelar:hover {
+    background-color: #e0e0e0;
+}
+
+/* ===== ESTILOS RESPONSIVE (PARA MÓVILES Y TABLETS) ===== */
+
+@media (max-width: 768px) {
+    /* --- Navegación --- */
+    nav {
+        flex-direction: column; /* Apila el logo y los enlaces */
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    nav ul {
+        flex-direction: column; /* Apila los enlaces del menú */
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    nav .logo {
+        padding-right: 0; /* Quita el espacio extra del logo */
+    }
+
+    /* --- Categorías en el Index --- */
+    .Categorias-contenedor {
+        flex-direction: column; /* Apila las categorías */
+        align-items: center;
+        gap: 20px; /* Reduce el espacio entre ellas */
+    }
+
+    /* --- Filtros en Productos --- */
+    .filtros-contenedor {
+        flex-direction: column; /* Apila los filtros */
+        align-items: stretch; /* Hace que ocupen todo el ancho */
+        gap: 15px;
+    }
+
+    .filtro {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .filtro label {
+        margin-bottom: 5px;
+    }
+
+    /* --- Vista del Carrito de Compras --- */
+    .carrito-vista {
+        flex-direction: column; /* Apila la lista de productos y el resumen */
+    }
+
+    .carrito-resumen {
+        width: 100%; /* Asegura que el resumen ocupe todo el ancho */
+        box-sizing: border-box;
+    }
+
+    .carrito-item {
+        flex-direction: column; /* Apila la imagen y la info del producto */
+        align-items: center;
+        text-align: center;
+    }
+
+}
