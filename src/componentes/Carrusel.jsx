@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import carruselImg1 from '../img/carrusel.jpg';
+import carruselImg2 from '../img/carrusel2.jpg';
 
 // Las imágenes que usará el carrusel
 const imagenes = [
-  "/img/carrusel.jpg",
-  "/img/carrusel2.jpg"
+  carruselImg1,
+  carruselImg2
 ];
 
 export function Carrusel() {

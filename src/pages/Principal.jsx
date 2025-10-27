@@ -1,12 +1,14 @@
 import { Navbar } from "../componentes/Navbar";
 import { Footer } from "../componentes/Footer";
+import { Carrusel } from "../componentes/Carrusel";
 
 
 export function Principal() {
     return (
         <div>
             <Navbar />
-            <h1>Página </h1>
+            <Carrusel />
+            <h1>Página Principal</h1>
             <Footer />
         </div>
     );
