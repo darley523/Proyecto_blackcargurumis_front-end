@@ -1,12 +1,18 @@
-//import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Principal } from './pages/Principal'
 import { Login } from './pages/Login'
 import { Register } from './pages/Register'
 import { Productos } from './pages/Productos'
 import { Compras } from './pages/Compras'
-import { Admin } from './pages/Admin'
+
+import { AdminLayout } from './pages/admin/AdminLayout';
+import { Dashboard } from './pages/admin/Dashboard';
+import { AdminUsers } from './pages/admin/AdminUsers';
+import { AdminOrders } from './pages/admin/AdminOrders';
+import { AdminProducts } from './pages/admin/AdminProducts';
+
 import './App.css'
+
 
 function App() {
 
@@ -18,8 +24,14 @@ function App() {
         <Route path="/login" element={<Login />} /> 
         <Route path="/register" element={<Register />} />
         <Route path='/compras' element={<Compras />} />    
-        <Route path='/admin' element={<Admin />} />
-              
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="usuarios" element={<AdminUsers />} />
+          <Route path="pedidos" element={<AdminOrders />} />
+          <Route path="productos" element={<AdminProducts />} />
+        </Route>
+
         </Routes>
     </Router>
   )

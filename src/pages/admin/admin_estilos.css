@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+/* Variables de color personalizadas para que coincidan con tu marca */
+:root {
+    --theme-pink-light: #f5daf2;
+    --theme-pink-medium: #EFC3E6;
+    --theme-pink-dark: #d6a9d0;
+    --theme-text: #333;
+}
+
+/* Encapsular estilos del admin dentro de .admin-layout para evitar afectar el resto de la app */
+.admin-layout {
+    font-family: "Poiret One", sans-serif;
+    background-color: #f8f9fa; /* Un fondo neutro para el contenido del admin */
+}
+
+/* Estilos para el menú lateral (Sidebar) */
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background-color: var(--theme-pink-light);
+    border-right: 1px solid var(--theme-pink-medium);
+}
+
+.sidebar .nav-link {
+    font-size: 1.2rem;
+    color: var(--theme-text);
+    font-weight: bold;
+}
+
+.sidebar .nav-link:hover {
+    background-color: var(--theme-pink-medium);
+}
+
+/* Estilo para el enlace activo en el menú */
+.sidebar .nav-link.active {
+    background-color: var(--theme-pink-dark);
+    color: var(--theme-text);
+}
+
+/* Estilos para el contenido principal */
+.content {
+    width: calc(100% - 280px);
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid var(--theme-pink-medium);
+}
+
+.card-title {
+    color: var(--theme-text);
+    font-weight: bold;
+}
+
+/* Personalización de los botones de Bootstrap */
+.btn-primary {
+    background-color: var(--theme-pink-medium);
+    border-color: var(--theme-pink-dark);
+    color: var(--theme-text);
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: var(--theme-pink-dark);
+    border-color: var(--theme-pink-dark);
+}
