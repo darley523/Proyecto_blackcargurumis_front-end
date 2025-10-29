@@ -1,7 +1,6 @@
 import { Footer } from "../componentes/Footer";
 import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate
 import { useState, useEffect } from 'react';
-import logoSinFondo from "../img/logo_sin_fondo.png";
 import { useAuth } from "../context/AuthContext";
 
 export function Login() {
@@ -63,9 +62,16 @@ export function Login() {
 
                 // Si el backend responde con un error (ej. 401 No Autorizado)
                 if (!response.ok) {
-                    // Intenta leer el mensaje de error del backend
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Email o contraseña incorrectos');
+                    let errorText = "Email o contraseña incorrectos";
+                    
+                    try {
+                        const errorData = await response.json();
+                        errorText = errorData.message || errorText;
+                    } catch (e) {
+                    console.warn("Respuesta de error del servidor sin JSON. Usando mensaje por defecto.");   
+                    }
+
+                    throw new Error(errorText);
                 }
 
                 // Si la respuesta es exitosa (ej. 200 OK)
@@ -97,7 +103,7 @@ export function Login() {
                 <form className="login-form" onSubmit={handleSubmit} noValidate>
 
                     <Link to="/">
-                        <img src={logoSinFondo} alt="Logo de la Tienda" className="login-logo" />
+                        <img src="/img/logo_sin_fondo.png" alt="Logo de la Tienda" className="login-logo" />
                     </Link>
 
                     <div className="form-group">

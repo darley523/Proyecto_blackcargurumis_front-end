@@ -6,6 +6,14 @@ export function Navbar() {
     // Consume el estado global de autenticación
     const { user, logoutAction } = useAuth();
 
+    // Determina si el usuario tiene rol de admin cubriendo varias formas comunes
+    const isAdmin = Boolean(user && (
+        (Array.isArray(user.roles) && user.roles.includes('ROLE_ADMIN')) ||
+        (typeof user.role === 'string' && (user.role === 'ROLE_ADMIN' || user.role === 'ADMIN')) ||
+        (Array.isArray(user.authorities) && (user.authorities.includes('ROLE_ADMIN') || user.authorities.some(a => a.authority === 'ROLE_ADMIN'))) ||
+        user.isAdmin === true
+    ));
+
     /**
      * Manejador para el cierre de sesión
      */
@@ -20,19 +28,20 @@ export function Navbar() {
             <ul>
                 <li><Link to="/">Inicio</Link></li>
                 <li><Link to="/productos">Productos</Link></li>
+                <li><Link to="/compras">Compras</Link></li>
                 
                 {user ? (
                     // Si el 'user' EXISTE (está logueado)
                     <>
-                        <li><Link to="/compras">Compras</Link></li>
+                        
                         
                         {/* Muestra Admin solo si el rol es 'ROLE_ADMIN' */}
-                        {user.roles && user.roles.includes('ROLE_ADMIN') && (
+                        {isAdmin && (
                             <li><Link to="/admin">Admin</Link></li>
                         )}
                         
                         <li>
-                            <button onClick={handleLogout} className="navbar-logout-button">
+                            <button type="button" onClick={handleLogout} className="navbar-logout-button" aria-label="Cerrar sesión">
                                 Cerrar Sesión
                             </button>
                         </li>

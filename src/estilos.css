@@ -603,3 +603,31 @@ input.invalid {
     }
 
 }
+
+/* Estilos para el botón de cerrar sesión en la navbar */
+.navbar-logout-button {
+    background-color: transparent; /* transparente por defecto */
+    color: #5b2b5b; /* color acorde con la paleta morada */
+    border: 2px solid #9C89B8; /* borde visible y suave */
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.08s ease;
+}
+
+.navbar-logout-button:hover {
+    background-color: #9C89B8; /* relleno morado al hover */
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.navbar-logout-button:active {
+    transform: translateY(0);
+}
+
+/* Asegurar que botones dentro del nav se ven bien */
+nav ul li button {
+    font-size: 1rem;
+    line-height: 1;
+}

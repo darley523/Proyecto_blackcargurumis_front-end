@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Footer } from "../componentes/Footer";
-import logoSinFondo from "../img/logo_sin_fondo.png";
 import { useAuth } from "../context/AuthContext"; // Importa el hook de autenticación
 
 export function Register() {
@@ -120,7 +119,7 @@ export function Register() {
             <main className="login-contenedor">
                 <form className="login-form" onSubmit={handleSubmit} noValidate>
                     <Link to="/">
-                        <img src={logoSinFondo} alt="Logo de la Tienda" className="login-logo" />
+                        <img src="/img/logo_sin_fondo.png" alt="Logo de la Tienda" className="login-logo" />
                     </Link>
 
                     {/* --- Campo Nombre --- */}

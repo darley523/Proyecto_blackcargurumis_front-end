@@ -25,7 +25,9 @@ export const CartProvider = ({ children }) => {
                 );
             } else {
                 // Si no existe, lo añadimos con cantidad 1
-                return [...prevItems, { ...product, quantity: 1 }];
+                // Aseguramos que el objeto incluya la propiedad 'img' que usa la vista de Compras
+                const imgPath = product.img || (product.imagenUrl ? `/img/${product.imagenUrl}` : product.imagen || '');
+                return [...prevItems, { ...product, quantity: 1, img: imgPath }];
             }
         });
         console.log("Producto añadido:", product.nombre);

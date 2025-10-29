@@ -1,6 +1,5 @@
 import { NavLink, Outlet, Link } from 'react-router-dom';
 import { Nav, Dropdown } from 'react-bootstrap';
-import logoSinFondo from '../../img/logo_sin_fondo.png';    
 import './admin_estilos.css'; //
 
 export function AdminLayout() {
@@ -9,7 +8,7 @@ export function AdminLayout() {
             {/* --- Menú Lateral (Sidebar) --- */}
             <div className="sidebar d-flex flex-column flex-shrink-0 p-3">
                 <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-                    <img src={logoSinFondo} alt="Logo" height="100" />
+                    <img src="/img/logo_sin_fondo.png" alt="Logo" height="100" />
                 </Link>
                 <hr />
                 <Nav variant="pills" className="flex-column mb-auto" as="ul">
