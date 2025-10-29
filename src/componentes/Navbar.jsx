@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../img/logo_sin_fondo.png';
+//import logo from '../img/logo_sin_fondo.png';
 import { useAuth } from '../context/AuthContext'; // Importa el hook de autenticación
 
 export function Navbar() {
@@ -16,7 +16,7 @@ export function Navbar() {
 
     return (
         <nav>
-            <img src={logo} alt="Logo" className="logo"/>
+            <img src="/img/logo_sin_fondo.png" alt="Logo" className="logo"/>
             <ul>
                 <li><Link to="/">Inicio</Link></li>
                 <li><Link to="/productos">Productos</Link></li>

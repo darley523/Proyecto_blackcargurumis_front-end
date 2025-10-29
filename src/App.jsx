@@ -19,7 +19,6 @@ import './App.css'
 function App() {
 
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<Principal />} />
         <Route path="/productos" element={<Productos />} />
@@ -38,7 +37,7 @@ function App() {
         </Route>
 
         </Routes>
-    </Router>
+    
   )
 
 }
