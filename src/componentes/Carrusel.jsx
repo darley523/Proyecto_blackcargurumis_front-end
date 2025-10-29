@@ -20,7 +20,6 @@ export function Carrusel() {
     });
   };
 
-  // 3. Reemplazamos 'setInterval' con un "Efecto" de React
   useEffect(() => {
     const carruselIntervalo = setInterval(() => {
       cambiarImagen(1);
@@ -30,9 +29,9 @@ export function Carrusel() {
     return () => clearInterval(carruselIntervalo);
   }, []); // El [] asegura que solo se ejecute una vez
 
-  // 4. El HTML se convierte en JSX dentro del return
+  
   return (
-    <section className="Carrusel"> {/* 'class' se vuelve 'className' */}
+    <section className="Carrusel">
       <div className="Carrusel-contenedor">
         {imagenes.map((imgSrc, i) => (
           <img
@@ -44,7 +43,6 @@ export function Carrusel() {
           />
         ))}
       </div>
-      {/* 'onclick' ahora llama a nuestra función de React */}
       <button className="carrusel-btn carrusel-btn-prev" onClick={() => cambiarImagen(-1)}>&#10094;</button>
       <button className="carrusel-btn carrusel-btn-next" onClick={() => cambiarImagen(1)}>&#10095;</button>
     </section>

@@ -51,7 +51,7 @@ export function Register() {
         return formatoValido.test(rutLimpio);
     }
 
-    // 5. Función de envío y validación
+    // Función de envío y validación
     const handleSubmit = (e) => {
         e.preventDefault();
         const newErrors = {};

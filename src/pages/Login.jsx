@@ -7,10 +7,9 @@ export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // 2. Estado para guardar los errores de validación
+    //Estado para guardar los errores de validación
     const [errors, setErrors] = useState({});
 
-    // 3. Efecto para añadir/quitar la clase especial del <body>
     useEffect(() => {
         document.body.classList.add('login-register-body');
 
@@ -19,7 +18,6 @@ export function Login() {
         };
     }, []);
 
-    // Función que maneja el envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault(); // Previene la recarga de la página
 
@@ -65,7 +63,6 @@ export function Login() {
                             onChange={(e) => setEmail(e.target.value)} // Actualiza el estado
                             className={errors.email ? 'invalid' : ''} // Añade clase 'invalid' si hay error
                         />
-                        {/* Muestra el error si existe */}
                         <small
                             className="form-error"
                             style={{ display: errors.email ? 'block' : 'none' }}
