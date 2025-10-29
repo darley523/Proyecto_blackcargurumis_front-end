@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Footer } from "../componentes/Footer";
 import logoSinFondo from "../img/logo_sin_fondo.png";
+import { useAuth } from "../context/AuthContext"; // Importa el hook de autenticación
+
 export function Register() {
     // Un solo estado para todos los campos del formulario
     const [formData, setFormData] = useState({
@@ -15,6 +17,12 @@ export function Register() {
 
     // Estado para los errores
     const [errors, setErrors] = useState({});
+    const [serverError, setServerError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    // Obtiene la acción de login desde el contexto
+    const { loginAction } = useAuth(); 
 
     // Efecto para la clase del <body> 
     useEffect(() => {
@@ -34,57 +42,77 @@ export function Register() {
     };
 
     function validarFormatoRut(rut) {
-        if (!rut || typeof rut !== 'string') {
-            return false;
-        }
-
-        //Limpia el RUT de puntos (ej: "12.345.678-9" -> "12345678-9")
+        if (!rut || typeof rut !== 'string') return false;
         const rutLimpio = rut.replace(/\./g, '');
-
-        //    ^               -> Inicio de la cadena
-        //    (\d{7,8})       -> Captura 7 u 8 dígitos (el "cuerpo")
-        //    -               -> Seguido de un guion
-        //    ([\dKk])        -> Captura un dígito (0-9) o una 'K' (mayúscula o minúscula)
-        //    $               -> Fin de la cadena
         const formatoValido = /^(\d{7,8})-([\dKk])$/;
-
         return formatoValido.test(rutLimpio);
     }
 
     // Función de envío y validación
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrors({});
+        setServerError(null);
+
         const newErrors = {};
         const { nombre, email, password, confirmPassword, telefono, rut } = formData;
 
+        // --- Validación del cliente ---
         if (!nombre) newErrors.nombre = "El nombre es obligatorio";
         if (!email) newErrors.email = "El correo es obligatorio";
         if (!password) {
             newErrors.password = "La contraseña es obligatoria";
         } else if (password.length < 8) {
             newErrors.password = "Debe tener al menos 8 caracteres";
-
         }
-
         if (password !== confirmPassword) {
             newErrors.confirmPassword = "Las contraseñas no coinciden";
         }
-
         if (!telefono) newErrors.telefono = "El teléfono es obligatorio";
-
-        if (!rut) newErrors.rut = "El RUT es obligatorio";
-        else if (!validarFormatoRut(rut)) {
+        if (!rut) {
+            newErrors.rut = "El RUT es obligatorio";
+        } else if (!validarFormatoRut(rut)) {
             newErrors.rut = "El formato del RUT no es válido (Ej: 12345678-9)";
         }
-
-
+        
         setErrors(newErrors);
 
+        // Si no hay errores, enviar al backend
         if (Object.keys(newErrors).length === 0) {
-            console.log("Registrando usuario:", formData);
-            // fetch() al backend para crear el usuario
+            setLoading(true);
+            try {
+                const response = await fetch('http://localhost:8080/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nombre: formData.nombre,
+                        email: formData.email,
+                        password: formData.password,
+                        telefono: formData.telefono,
+                        rut: formData.rut
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Error al registrar. El email o RUT ya pueden estar en uso.');
+                }
+
+                // Si el registro es exitoso, usa la acción del contexto
+                const data = await response.json();
+                loginAction(data.token);
+                
+                alert('Registro exitoso');
+                navigate('/'); // Redirige a la página principal
+
+            } catch (error) {
+                setServerError(error.message);
+            } finally {
+                setLoading(false);
+            }
         }
-        // -------------------------------------------------
     };
 
     return (
@@ -101,12 +129,13 @@ export function Register() {
                         <input
                             type="text"
                             id="nombre"
-                            name="nombre" // 'name' es clave para el 'handleChange'
+                            name="nombre"
                             required
                             placeholder="Ej: Ana Torres"
                             value={formData.nombre}
                             onChange={handleChange}
                             className={errors.nombre ? 'invalid' : ''}
+                            disabled={loading}
                         />
                         <small className="form-error" style={{ display: errors.nombre ? 'block' : 'none' }}>
                             {errors.nombre}
@@ -125,6 +154,7 @@ export function Register() {
                             value={formData.email}
                             onChange={handleChange}
                             className={errors.email ? 'invalid' : ''}
+                            disabled={loading}
                         />
                         <small className="form-error" style={{ display: errors.email ? 'block' : 'none' }}>
                             {errors.email}
@@ -139,10 +169,11 @@ export function Register() {
                             id="password"
                             name="password"
                             required
-                            placeholder="8+ caracteres, 1 mayúscula, 1 número"
+                            placeholder="8+ caracteres"
                             value={formData.password}
                             onChange={handleChange}
                             className={errors.password ? 'invalid' : ''}
+                            disabled={loading}
                         />
                         <small className="form-error" style={{ display: errors.password ? 'block' : 'none' }}>
                             {errors.password}
@@ -155,12 +186,13 @@ export function Register() {
                         <input
                             type="password"
                             id="confirm-password"
-                            name="confirmPassword" // 'name' debe coincidir con el estado
+                            name="confirmPassword"
                             required
                             placeholder="Repite tu contraseña"
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             className={errors.confirmPassword ? 'invalid' : ''}
+                            disabled={loading}
                         />
                         <small className="form-error" style={{ display: errors.confirmPassword ? 'block' : 'none' }}>
                             {errors.confirmPassword}
@@ -179,6 +211,7 @@ export function Register() {
                             value={formData.telefono}
                             onChange={handleChange}
                             className={errors.telefono ? 'invalid' : ''}
+                            disabled={loading}
                         />
                         <small className="form-error" style={{ display: errors.telefono ? 'block' : 'none' }}>
                             {errors.telefono}
@@ -197,6 +230,7 @@ export function Register() {
                             value={formData.rut}
                             onChange={handleChange}
                             className={errors.rut ? 'invalid' : ''}
+                            disabled={loading}
                         />
                         <small className="form-error" style={{ display: errors.rut ? 'block' : 'none' }}>
                             {errors.rut}
@@ -207,11 +241,21 @@ export function Register() {
                         </div>
                     </div>
 
-                    <button type="submit">Registrarse</button>
+                    {/* Muestra errores del servidor */}
+                    <small
+                        className="form-error"
+                        style={{ display: serverError ? 'block' : 'none', textAlign: 'center' }}
+                    >
+                        {serverError}
+                    </small>
+
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Registrando...' : 'Registrarse'}
+                    </button>
 
                 </form>
             </main>
-        <Footer />
+            <Footer />
         </>
     );
 }

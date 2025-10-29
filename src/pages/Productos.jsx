@@ -1,27 +1,54 @@
 import { Navbar } from "../componentes/Navbar";
 import { Footer } from "../componentes/Footer";
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom'; // Para leer la URL
-import { productData } from '../data/productData';
+import { useSearchParams } from 'react-router-dom'; 
 import { ProductCard } from '../componentes/ProductCard';
 
 export function Productos() {
     const [searchParams] = useSearchParams();
     const categoriaURL = searchParams.get('categoria');
 
+    // Estados para los datos del backend ---
+    const [productos, setProductos] = useState([]); // <-- Aquí se guardarán los productos de la API
+    const [cargando, setCargando] = useState(true);
+
     const [categoria, setCategoria] = useState(categoriaURL || 'todas');
     const [orden, setOrden] = useState('defecto');
 
+    // Sincroniza el estado 'categoria' con la URL
     useEffect(() => {
         setCategoria(categoriaURL || 'todas');
     }, [categoriaURL]);
 
+    // useEffect para llamar a la API ---
+    useEffect(() => {
+        const fetchProductos = async () => {
+            setCargando(true);
+            try {
+                // Llama al endpoint del backend
+                const response = await fetch('http://localhost:8080/api/productos');
+                if (!response.ok) {
+                    throw new Error('Error al cargar productos');
+                }
+                const data = await response.json();
+                setProductos(data); // <-- Guarda los productos en el estado
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setCargando(false);
+            }
+        };
+
+        fetchProductos();
+    }, []); // El array vacío [] hace que se ejecute solo una vez (al cargar)
+
+
     const productosFiltradosYOrdenados = useMemo(() => {
-        let productosVisibles = [...productData];
+        let productosVisibles = [...productos]; 
 
         // filtrar por categoría
         if (categoria !== 'todas') {
-            productosVisibles = productosVisibles.filter(p => p.categoria === categoria);
+            productosVisibles = productosVisibles.filter(p => p.categoria.nombre.toLowerCase() === categoria);
         }
 
         // ordenar
@@ -34,21 +61,34 @@ export function Productos() {
         });
 
         return productosVisibles;
-    }, [categoria, orden, productData]);
+    }, [categoria, orden, productos]);
+
+    // Muestra un estado de carga ---
+    if (cargando) {
+        return (
+            <div>
+                <Navbar />
+                <main>
+                    <div className="cargando-contenedor">Cargando productos...</div>
+                </main>
+                <Footer />
+            </div>
+        );
+    }
 
     return (
         <div>
             <Navbar />
                 <main>
-                    {/* --- Sección de Filtros --- */}
+                    {/* --- Sección de Filtros  --- */}
                     <section className="filtros-contenedor">
                         <div className="filtro">
                             <label htmlFor="categoria-filtro">Filtrar por categoría:</label>
                             <select
                                 id="categoria-filtro"
                                 name="categoria"
-                                value={categoria} // El valor está "controlado" por el estado
-                                onChange={(e) => setCategoria(e.target.value)} // Al cambiar, actualiza el estado
+                                value={categoria}
+                                onChange={(e) => setCategoria(e.target.value)}
                             >
                                 <option value="todas">Todas</option>
                                 <option value="amigurumis">Amigurumis</option>
@@ -62,8 +102,8 @@ export function Productos() {
                             <select
                                 id="orden-filtro"
                                 name="orden"
-                                value={orden} // El valor está "controlado" por el estado
-                                onChange={(e) => setOrden(e.target.value)} // Al cambiar, actualiza el estado
+                                value={orden}
+                                onChange={(e) => setOrden(e.target.value)}
                             >
                                 <option value="defecto">Por defecto</option>
                                 <option value="az">Alfabéticamente, A-Z</option>

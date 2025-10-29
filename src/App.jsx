@@ -11,6 +11,8 @@ import { AdminUsers } from './pages/admin/AdminUsers';
 import { AdminOrders } from './pages/admin/AdminOrders';
 import { AdminProducts } from './pages/admin/AdminProducts';
 
+import { AdminRoute } from './componentes/AdminRoute'
+
 import './App.css'
 
 
@@ -25,11 +27,14 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path='/compras' element={<Compras />} />    
 
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="usuarios" element={<AdminUsers />} />
-          <Route path="pedidos" element={<AdminOrders />} />
-          <Route path="productos" element={<AdminProducts />} />
+
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="usuarios" element={<AdminUsers />} />
+            <Route path="pedidos" element={<AdminOrders />} />
+            <Route path="productos" element={<AdminProducts />} />
+          </Route>
         </Route>
 
         </Routes>

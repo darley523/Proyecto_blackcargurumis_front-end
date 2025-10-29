@@ -5,17 +5,34 @@ import { useMemo } from "react";
 
 export function Compras() {
     const COSTO_ENVIO = 3500;
-    const { cartItems, removeFromCart } = useCart();
+    
+    const { cartItems, removeFromCart, finalizarCompra, clearCart } = useCart();
+    
     const subtotal = useMemo(() => {
         return cartItems.reduce((acc, item) => acc + (item.precio * item.quantity), 0);
     }, [cartItems]);
+
     const total = subtotal + COSTO_ENVIO;
+
     const formatPeso = (value) => {
         return value.toLocaleString('es-CL', {
             style: 'currency',
             currency: 'CLP'
         });
     };
+
+    // Función que llama al contexto
+    const handleIrAPagar = async () => {
+        await finalizarCompra();
+    };
+
+    // Cancelar compra/vaciar carrito
+    const handleCancelar = () => {
+        if (window.confirm("¿Estás seguro de que deseas vaciar tu carrito?")) {
+            clearCart();
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -56,6 +73,7 @@ export function Compras() {
                             ))
                         )}
                     </section>
+
                     <aside className="carrito-resumen">
                         <h2>Resumen de la Compra</h2>
                         <div className="resumen-linea">
@@ -70,10 +88,20 @@ export function Compras() {
                             <span>Total:</span>
                             <span>{subtotal === 0 ? formatPeso(0) : formatPeso(total)}</span>
                         </div>
-                        <button className="btn-pago" disabled={cartItems.length === 0}>
-                            Ir a Pagar
+
+                        <button 
+                            className="btn-pago" 
+                            disabled={cartItems.length === 0}
+                            onClick={handleIrAPagar} 
+                        >
+                            Realizar Pedido
                         </button>
-                        <button className="btn-cancelar" disabled={cartItems.length === 0}>
+
+                        <button 
+                            className="btn-cancelar" 
+                            disabled={cartItems.length === 0}
+                            onClick={handleCancelar}
+                        >
                             Cancelar Compra
                         </button>
                     </aside>
