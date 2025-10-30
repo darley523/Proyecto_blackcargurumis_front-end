@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Badge } from 'react-bootstrap';
-import { useAuth } from '../../context/AuthContext'; // hook de autenticación
+import { useAuth } from '../../context/AuthContext'; // Autenticación
 import { DetallesPedidoModal } from '../../componentes/DetallesPedidoModal'; // Importar el modal
 
 export function AdminOrders() {
