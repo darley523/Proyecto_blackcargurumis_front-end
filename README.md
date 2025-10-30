@@ -1,16 +1,15 @@
-# React + Vite
+blackcatgurumis es un emprendimiento que vende articulos hechos a mano, actualmente solo cuenta con una pagina de instagram y por ello busca expandirse a traves de una tienda de e-commerce. En esta version el administrador puede añadir productos desde la misma pagina (que se guardan en la bdd) puede eliminar usuarios, puede ver los diversos pedidos que han sido hechos ademas de poder editar sus estados. Ademas las contraseñas son encriptadas al guardarse en la base de datos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tecnologias usadas: Springboot para el backend, Bootstrap (para el panel de administracion principalmente), react, vite, javaScript, jwt para la autenticacion de los usuarios, spring security para proteger rutas privadas.
 
-Currently, two official plugins are available:
+Requisitos para ejecutar el proyecto completo (backend-frontend)-> Vs code (con extensiones: extension pack for java y spring boot extension pack) XAMPP, MySqlWorkbench, npm, vite y Java minimo 17
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1.Abrir Xampp y dar start en los modulos de apache y MySqlWorkbench
+2.Abrir MySqlWorkbench y crear una conexion de usuario root y contraseña vacia
+3.En MySqlWorkbench crear un nuevo scheme de nombre blackcatgurumi
+4.En vs code abrir proyecto_blackcatugurumis_back-end 
+5.En vs code buscar a la izquierda el icono de Spring Boot Dashboard y darle a ejecutar a blackend-blackcatgurumis (esto creara la estructura de la base de datos)
+6.Abrir proyecto_blackcatgurumis_front-end y lanzarlo con npm run dev
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Documentación Swagger
+http://localhost:8080/swagger-ui/index.html
