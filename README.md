@@ -1,9 +1,14 @@
+#PROYECTO
 blackcatgurumis es un emprendimiento que vende articulos hechos a mano, actualmente solo cuenta con una pagina de instagram y por ello busca expandirse a traves de una tienda de e-commerce. En esta version el administrador puede añadir productos desde la misma pagina (que se guardan en la bdd) puede eliminar usuarios, puede ver los diversos pedidos que han sido hechos ademas de poder editar sus estados. Ademas las contraseñas son encriptadas al guardarse en la base de datos
 
-Tecnologias usadas: Springboot para el backend, Bootstrap (para el panel de administracion principalmente), react, vite, javaScript, jwt para la autenticacion de los usuarios, spring security para proteger rutas privadas.
+#Tecnologías usadas
+Springboot para el backend, Bootstrap (para el panel de administracion principalmente), react, vite, javaScript, jwt para la autenticacion de los usuarios, spring security para proteger rutas privadas.
 
-Requisitos para ejecutar el proyecto completo (backend-frontend)-> Vs code (con extensiones: extension pack for java y spring boot extension pack) XAMPP, MySqlWorkbench, npm, vite y Java minimo 17
+#Requisitos para ejecutar el proyecto completo (backend-frontend)
 
+Vs code (con extensiones: extension pack for java y spring boot extension pack) XAMPP, MySqlWorkbench, npm, vite y Java minimo 17
+
+#Paso a Paso
 1.Abrir Xampp y dar start en los modulos de apache y MySqlWorkbench
 2.Abrir MySqlWorkbench y crear una conexion de usuario root y contraseña vacia
 3.En MySqlWorkbench crear un nuevo scheme de nombre blackcatgurumi
@@ -14,13 +19,17 @@ Requisitos para ejecutar el proyecto completo (backend-frontend)-> Vs code (con 
 Documentación Swagger
 http://localhost:8080/swagger-ui/index.html
 
+#Credencial admin
+
+correo = admin@blackcatgurumis.cl
+contraseña = admin
 
 *IMPORTANTE PREVIO A LA EJECUCUCION VERIRIFICAR ESTOS MODULOS DE NODE
-# Para el enrutamiento
+Para el enrutamiento
 npm install react-router-dom
 
-# Para los componentes de UI
+Para los componentes de UI
 npm install react-bootstrap bootstrap
 
-# Para decodificar tokens de autenticación
+Para decodificar tokens de autenticación
 npm install jwt-decode
