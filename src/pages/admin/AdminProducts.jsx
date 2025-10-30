@@ -156,7 +156,7 @@ export function AdminProducts() {
                 </thead>
                 <tbody>
                     {productos.map(product => (
-                        <tr key={product.id}>
+                        <tr key={product.id} className={product.stock < 5 ? 'table-warning' : ''}>
                             <td>{product.id}</td>
                             <td>{product.nombre}</td>
                             <td>{product.categoria.nombre}</td>

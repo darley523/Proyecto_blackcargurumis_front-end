@@ -65,3 +65,10 @@
     background-color: var(--theme-pink-dark);
     border-color: var(--theme-pink-dark);
 }
+
+/* Estilo para resaltar filas de productos con bajo stock */
+.table-warning {
+    --bs-table-bg: #f5daf2; /* Usar el rosa claro de la paleta de colores */
+    --bs-table-border-color: #d6a9d0; /* Usar el rosa oscuro para el borde */
+    --bs-table-color: #333; /* Asegurarse de que el texto sea legible */
+}
