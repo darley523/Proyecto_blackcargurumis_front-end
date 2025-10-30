@@ -60,6 +60,30 @@ export function AdminUsers() {
         fetchUsuarios();
     }, [token]); // Dependencia: re-ejecutar si el token cambia
 
+    const handleDelete = async (userId) => {
+        if (window.confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/admin/usuarios/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al eliminar el usuario');
+                }
+
+                setUsuarios(usuarios.filter(user => user.id !== userId));
+                alert("Usuario eliminado con éxito.");
+
+            } catch (err) {
+                console.error("Error al eliminar usuario:", err);
+                alert(err.message);
+            }
+        }
+    };
+
     // Renderizado condicional basado en el estado de carga
     if (cargando) {
         return <h1 className="mb-4">Cargando usuarios...</h1>;
@@ -98,13 +122,12 @@ export function AdminUsers() {
                                 {/* Usar la función helper para mostrar roles */}
                                 <td>{formatRoles(user.roles)}</td>
                                 <td>
-                                    <Button variant="primary" size="sm" className="me-2">Editar</Button>
-                                    
                                     {/* Lógica para no permitir borrar a un admin */}
                                     <Button 
                                         variant="danger" 
                                         size="sm" 
                                         disabled={user.roles.some(rol => rol.nombre === 'ROLE_ADMIN')}
+                                        onClick={() => handleDelete(user.id)}
                                     >
                                         Borrar
                                     </Button>

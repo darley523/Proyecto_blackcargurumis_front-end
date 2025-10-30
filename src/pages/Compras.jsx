@@ -23,7 +23,7 @@ export function Compras() {
 
     // Función que llama al contexto
     const handleIrAPagar = async () => {
-        await finalizarCompra();
+        await finalizarCompra(subtotal === 0 ? 0 : COSTO_ENVIO);
     };
 
     // Cancelar compra/vaciar carrito

@@ -1,6 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Badge } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthContext'; // hook de autenticación
+import { DetallesPedidoModal } from '../../componentes/DetallesPedidoModal'; // Importar el modal
 
 export function AdminOrders() {
     // Definir estados locales: pedidos, carga, error
@@ -8,8 +10,46 @@ export function AdminOrders() {
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
     
+    // Estados para el modal
+    const [showModal, setShowModal] = useState(false);
+    const [selectedPedido, setSelectedPedido] = useState(null);
+
     // Obtener token de autenticación desde el contexto
     const { token } = useAuth();
+
+    // Función para abrir el modal y cargar detalles del pedido
+    const handleShowModal = async (pedido) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/admin/pedidos/${pedido.id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!response.ok) {
+                const errorBody = await response.text();
+                throw new Error(`Error ${response.status}: No se pudieron cargar los detalles del pedido. ${errorBody}`);
+            }
+            const data = await response.json();
+            setSelectedPedido(data);
+            setShowModal(true);
+        } catch (err) {
+            console.error(err);
+            setError(err.message);
+        }
+    };
+
+    // Función para cerrar el modal
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedPedido(null);
+    };
+
+    // Función para actualizar el estado de un pedido en la lista
+    const handleStatusChange = (pedidoId, nuevoEstado) => {
+        setPedidos(prevPedidos => 
+            prevPedidos.map(p => 
+                p.id === pedidoId ? { ...p, estado: nuevoEstado } : p
+            )
+        );
+    };
 
     // Función helper para formatear moneda (CLP)
     const formatPeso = (value) => {
@@ -123,12 +163,22 @@ export function AdminOrders() {
                                     </Badge>
                                 </td>
                                 <td>
-                                    <Button variant="secondary" size="sm">Ver Detalles</Button>
+                                    <Button variant="secondary" size="sm" onClick={() => handleShowModal(pedido)}>Ver Detalles</Button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </Table>
+            )}
+
+            {/* Renderizar el modal si hay un pedido seleccionado */}
+            {selectedPedido && (
+                <DetallesPedidoModal 
+                    pedido={selectedPedido}
+                    show={showModal}
+                    onHide={handleCloseModal}
+                    onStatusChange={handleStatusChange}
+                />
             )}
         </>
     );

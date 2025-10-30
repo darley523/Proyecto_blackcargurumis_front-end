@@ -17,15 +17,24 @@ export const CartProvider = ({ children }) => {
             const itemExists = prevItems.find(item => item.id === product.id);
 
             if (itemExists) {
-                // Si existe, actualizamos la cantidad
+                // Si existe, verificar stock antes de aumentar la cantidad
+                if (itemExists.quantity >= product.stock) {
+                    alert(`No puedes agregar más de ${product.stock} unidades de ${product.nombre}.`);
+                    return prevItems; // Devolver items sin cambios
+                }
+                // Si hay stock, actualizamos la cantidad
                 return prevItems.map(item =>
                     item.id === product.id
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 );
             } else {
+                // Si es un producto nuevo, verificar que haya stock
+                if (product.stock <= 0) {
+                    alert(`El producto ${product.nombre} está sin stock.`);
+                    return prevItems;
+                }
                 // Si no existe, lo añadimos con cantidad 1
-                // Aseguramos que el objeto incluya la propiedad 'img' que usa la vista de Compras
                 const imgPath = product.img || (product.imagenUrl ? `/img/${product.imagenUrl}` : product.imagen || '');
                 return [...prevItems, { ...product, quantity: 1, img: imgPath }];
             }
@@ -50,7 +59,7 @@ export const CartProvider = ({ children }) => {
 
     
     //Envía el carrito al backend para crear un pedido.
-    const finalizarCompra = async () => {
+    const finalizarCompra = async (costoEnvio) => {
        if (!token) { 
             alert("Debes iniciar sesión para poder comprar.");
             navigate('/login');
@@ -64,12 +73,13 @@ export const CartProvider = ({ children }) => {
         }
 
         // 4. Transformar los datos del carrito al formato del DTO del backend
-        // El DTO (CrearPedidoRequest) espera: { items: [{ productoId: ..., cantidad: ... }] }
+        // El DTO (CrearPedidoRequest) espera: { items: [{ productoId: ..., cantidad: ... }], costoEnvio: ... }
         const pedidoRequest = {
             items: cartItems.map(item => ({
                 productoId: item.id,
                 cantidad: item.quantity // Mapea 'quantity' (React) a 'cantidad' (Java DTO)
-            }))
+            })),
+            costoEnvio: costoEnvio
         };
 
         // Realizar la llamada fetch al endpoint 
