@@ -13,3 +13,14 @@ Requisitos para ejecutar el proyecto completo (backend-frontend)-> Vs code (con 
 
 Documentación Swagger
 http://localhost:8080/swagger-ui/index.html
+
+
+*IMPORTANTE PREVIO A LA EJECUCUCION VERIRIFICAR ESTOS MODULOS DE NODE
+# Para el enrutamiento
+npm install react-router-dom
+
+# Para los componentes de UI
+npm install react-bootstrap bootstrap
+
+# Para decodificar tokens de autenticación
+npm install jwt-decode
