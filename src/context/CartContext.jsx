@@ -72,12 +72,11 @@ export const CartProvider = ({ children }) => {
             return;
         }
 
-        // 4. Transformar los datos del carrito al formato del DTO del backend
-        // El DTO (CrearPedidoRequest) espera: { items: [{ productoId: ..., cantidad: ... }], costoEnvio: ... }
+        // Transformar los datos del carrito al formato del backend
         const pedidoRequest = {
             items: cartItems.map(item => ({
                 productoId: item.id,
-                cantidad: item.quantity // Mapea 'quantity' (React) a 'cantidad' (Java DTO)
+                cantidad: item.quantity // Mapea 'quantity' (React) a 'cantidad' 
             })),
             costoEnvio: costoEnvio
         };
