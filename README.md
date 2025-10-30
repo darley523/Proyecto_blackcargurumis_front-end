@@ -1,7 +1,7 @@
-#PROYECTO
+PROYECTO.
 blackcatgurumis es un emprendimiento que vende articulos hechos a mano, actualmente solo cuenta con una pagina de instagram y por ello busca expandirse a traves de una tienda de e-commerce. En esta version el administrador puede añadir productos desde la misma pagina (que se guardan en la bdd) puede eliminar usuarios, puede ver los diversos pedidos que han sido hechos ademas de poder editar sus estados. Ademas las contraseñas son encriptadas al guardarse en la base de datos
 
-#Tecnologías usadas
+$Tecnologías usadas
 Springboot para el backend, Bootstrap (para el panel de administracion principalmente), react, vite, javaScript, jwt para la autenticacion de los usuarios, spring security para proteger rutas privadas.
 
 #Requisitos para ejecutar el proyecto completo (backend-frontend)
