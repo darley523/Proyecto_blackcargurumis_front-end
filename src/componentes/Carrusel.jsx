@@ -39,8 +39,20 @@ export function Carrusel() {
           />
         ))}
       </div>
-      <button className="carrusel-btn carrusel-btn-prev" onClick={() => cambiarImagen(-1)}>&#10094;</button>
-      <button className="carrusel-btn carrusel-btn-next" onClick={() => cambiarImagen(1)}>&#10095;</button>
+      <button
+        className="carrusel-btn carrusel-btn-prev"
+        aria-label="Anterior"
+        onClick={() => cambiarImagen(-1)}
+      >
+        &#10094;
+      </button>
+      <button
+        className="carrusel-btn carrusel-btn-next"
+        aria-label="Siguiente"
+        onClick={() => cambiarImagen(1)}
+      >
+        &#10095;
+      </button>
     </section>
   );
 }
