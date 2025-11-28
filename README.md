@@ -22,7 +22,7 @@ http://localhost:8080/swagger-ui/index.html
 correo = admin@blackcatgurumis.cl
 contraseña = admin
 
-**IMPORTANTE PREVIO A LA EJECUCUCION VERIRIFICAR ESTOS MODULOS DE NODE**
+**IMPORTANTE PREVIO A LA EJECUCIÓN VERIRIFICAR ESTOS MODULOS DE NODE**
 Para el enrutamiento
 npm install react-router-dom
 
