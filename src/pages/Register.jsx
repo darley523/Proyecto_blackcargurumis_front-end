@@ -95,8 +95,38 @@ export function Register() {
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Error al registrar. El email o RUT ya pueden estar en uso.');
+                    let msg = 'Error al registrar. El correo o RUT ya podría estar en uso.';
+                    let rawMessage = '';
+                    try {
+                        const contentType = response.headers.get('content-type') || '';
+                        if (contentType.includes('application/json')) {
+                            const errorData = await response.json();
+                            rawMessage = errorData?.message || errorData?.error || '';
+                        } else {
+                            rawMessage = await response.text();
+                        }
+                    } catch (_) {
+                        // ignorar errores al parsear el cuerpo del error
+                    }
+
+                    const lower = (rawMessage || '').toLowerCase();
+                    const looksDuplicate = response.status === 409 || /duplicate|duplic|unique|ya existe|exists/.test(lower);
+
+                    if (looksDuplicate) {
+                        if (lower.includes('rut')) {
+                            msg = 'Ese RUT ya existe, intente con otro.';
+                        } else if (lower.includes('correo') || lower.includes('email')) {
+                            msg = 'Ese correo ya existe, intente con otro.';
+                        } else {
+                            msg = 'El correo o RUT ya está registrado. Intente con otro.';
+                        }
+                    } else if (response.status === 400) {
+                        msg = rawMessage || 'Datos inválidos. Revisa el formulario.';
+                    } else if (response.status === 403) {
+                        msg = 'Operación no permitida. Verifica permisos o inicia sesión nuevamente.';
+                    }
+
+                    throw new Error(msg);
                 }
 
                 // Si el registro es exitoso, usa la acción del contexto
@@ -244,6 +274,7 @@ export function Register() {
                     <small
                         className="form-error"
                         style={{ display: serverError ? 'block' : 'none', textAlign: 'center' }}
+                        aria-live="polite"
                     >
                         {serverError}
                     </small>
