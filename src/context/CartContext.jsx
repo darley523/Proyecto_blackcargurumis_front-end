@@ -113,7 +113,7 @@ export const CartProvider = ({ children }) => {
                 throw new Error(errorMessage);
             }
 
-            // Si todo salió bien (éxito)
+            // Si todo salió bien
             const pedidoData = await response.json();
             
             // Preparar datos para la boleta
@@ -123,7 +123,7 @@ export const CartProvider = ({ children }) => {
                 costoEnvio: costoEnvio,
                 total: cartItems.reduce((acc, item) => acc + (item.precio * item.quantity), 0) + costoEnvio,
                 usuario: user,
-                numeroPedido: pedidoData.id || new Date().getTime() // Usar ID del backend o timestamp
+                numeroPedido: pedidoData.id || new Date().getTime() // Usar ID del backend o timestamp para asegurar id unico
             };
             
             // Generar y descargar la boleta PDF
