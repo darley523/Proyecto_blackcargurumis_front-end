@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from './AuthContext';
+import { generarBoletaPDF } from '../utils/generarBoletaPDF';
 
 const CartContext = createContext();
 
@@ -39,7 +40,6 @@ export const CartProvider = ({ children }) => {
                 return [...prevItems, { ...product, quantity: 1, img: imgPath }];
             }
         });
-        console.log("Producto añadido:", product.nombre);
     };
 
     // Función para eliminar un producto del carrito
@@ -95,15 +95,55 @@ export const CartProvider = ({ children }) => {
 
             // Manejar la respuesta del backend
             if (!response.ok) {
+                // Si es 401 o 403, el token expiró o no es válido
+                if (response.status === 401 || response.status === 403) {
+                    alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+                    navigate('/login');
+                    return;
+                }
+                
                 // Captura errores del backend (ej. "Stock insuficiente")
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Error al procesar el pedido');
+                let errorMessage = 'Error al procesar el pedido';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorMessage;
+                } catch (e) {
+                    console.warn('No se pudo parsear error del backend');
+                }
+                throw new Error(errorMessage);
             }
 
             // Si todo salió bien (éxito)
-            alert('¡Compra realizada con éxito!');
+            const pedidoData = await response.json();
+            
+            // Preparar datos para la boleta
+            const datosParaBoleta = {
+                items: cartItems,
+                subtotal: cartItems.reduce((acc, item) => acc + (item.precio * item.quantity), 0),
+                costoEnvio: costoEnvio,
+                total: cartItems.reduce((acc, item) => acc + (item.precio * item.quantity), 0) + costoEnvio,
+                usuario: user,
+                numeroPedido: pedidoData.id || new Date().getTime() // Usar ID del backend o timestamp
+            };
+            
+            // Generar y descargar la boleta PDF
+            try {
+                // Preguntar al usuario si desea descargar la boleta
+                const descargarBoleta = window.confirm('¿Desea descargar su boleta de compra?');
+                
+                if (descargarBoleta) {
+                    generarBoletaPDF(datosParaBoleta);
+                    alert('¡Compra realizada con éxito! Tu boleta se ha descargado.');
+                } else {
+                    alert('¡Compra realizada con éxito!');
+                }
+            } catch (pdfError) {
+                console.error('Error al generar PDF:', pdfError);
+                alert('¡Compra realizada con éxito! (Hubo un problema al generar la boleta PDF)');
+            }
+            
             clearCart(); // Vacía el carrito local
-            navigate('/compras'); // Redirige al usuario
+            navigate('/'); // Redirige al inicio
 
         } catch (error) {
             console.error('Error al finalizar la compra:', error);
